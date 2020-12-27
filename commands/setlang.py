@@ -1,10 +1,10 @@
 from discord.ext import commands
-from BotNameBot import BotNameBot
+from ToorneyBot import ToorneyBot
 from typing import Optional
 from customFunctions.diverse import update_guild_setting
 
 
-def setup(bot: BotNameBot):
+def setup(bot: ToorneyBot):
     @bot.command(name = "language", usage = "<language code>", aliases = ['lang'])
     @commands.cooldown(1, 3.0, commands.BucketType.guild)
     @commands.has_guild_permissions(manage_guild = True)

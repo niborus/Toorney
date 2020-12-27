@@ -10,13 +10,13 @@ from discord.ext.commands.errors import *
 from discord.errors import *
 from CustomErrors import GlobalMute, UserBanned, UserIsBot, CancelCommandSilent
 from config.SECRETS import PANIC_WEBHOOK
-from BotNameBot import BotNameBot
+from ToorneyBot import ToorneyBot
 from customFunctions.shortdiscord import sanitize
 
 logger = logging.getLogger("discord")
 
 
-def setup(bot: BotNameBot):
+def setup(bot: ToorneyBot):
     @bot.event
     async def on_command_error(ctx: commands.Context, err):
         translate = bot.translate.get_t_by_ctx(ctx)
@@ -33,8 +33,8 @@ def setup(bot: BotNameBot):
         # Prepared_Text:
         class t:
             support_server = \
-                _("If you don't think, you made a mistake, please reach out for the Bot-Support ({link}).") \
-                    .format(link = "https://supporter.yunamio.de/support-server")
+                _("If you don't think, you made a mistake, please create a new issue ({link}).") \
+                    .format(link = "https://github.com/niborus/Toorney/issues")
 
         # List with possible errors and the handling level of those errors
 
@@ -73,7 +73,7 @@ def setup(bot: BotNameBot):
 
             await ctx.send(_(
                 "Something went terrible wrong while doing this.\nPlease reach out for the "
-                "Bot-Support (https://supporter.yunamio.de/support-server)."))
+                "Bot-Support (https://github.com/niborus/Toorney/issues)."))
 
         # User Replies
         # Command silently Canceled:

@@ -6,9 +6,9 @@ from discord.ext import commands
 
 import Extensions
 from config import SECRETS, STATICS
-from customFunctions import boot, discord_oauth2
+from customFunctions import boot
 import translate
-from BotNameBot import BotNameBot
+from ToorneyBot import ToorneyBot
 
 # Logging
 print(" Set up internal Variables")
@@ -38,7 +38,7 @@ intents.typing = False
 intents.bans = False
 intents.invites = False
 
-bot = BotNameBot(command_prefix = commands.when_mentioned_or(STATICS.PREFIX), description = STATICS.DESCRIPTION,
+bot = ToorneyBot(command_prefix = commands.when_mentioned_or(STATICS.PREFIX), description = STATICS.DESCRIPTION,
                  status = discord.Status.dnd, owner_id = STATICS.OWNER_ID,
                  activity = discord.Game(name = "Booting"), intents = intents,
                  allowed_mentions = discord.AllowedMentions(everyone = False, users = False, roles = False))
@@ -48,23 +48,7 @@ bot = BotNameBot(command_prefix = commands.when_mentioned_or(STATICS.PREFIX), de
 async def on_ready():
     c = len(bot.guilds)
     boot.console_start(discord.__version__, c)
-    await bot.change_presence(activity = discord.Game(name = "type s.help"))
-
-
-@bot.event
-async def on_guild_join(guild: discord.Guild):
-    await discord_oauth2.execute_webhook_by_id \
-        (STATICS.INFORMATION_WEBHOOK[0], STATICS.INFORMATION_WEBHOOK[1],
-         content = ":green_circle: [{}] I was added to guild **{}**."
-         .format(len(bot.guilds), discord.utils.escape_markdown(guild.name)))
-
-
-@bot.event
-async def on_guild_remove(guild: discord.Guild):
-    await discord_oauth2.execute_webhook_by_id \
-        (STATICS.INFORMATION_WEBHOOK[0], STATICS.INFORMATION_WEBHOOK[1],
-         content = ":red_circle: [{}] I was removed from guild **{}**."
-         .format(len(bot.guilds), discord.utils.escape_markdown(guild.name)))
+    await bot.change_presence(activity = discord.Game(name = "type t.help"))
 
 
 # Import all Commands
@@ -76,4 +60,4 @@ for ex in Extensions.loadable():
 translate.create_help_text_pot(bot)
 
 print("Preparing the external System.")
-bot.run(SECRETS.TOKEN)
+bot.run(SECRETS.DiscordLogin.token)

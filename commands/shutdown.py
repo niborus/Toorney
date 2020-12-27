@@ -1,9 +1,9 @@
 from discord.ext import commands
-from BotNameBot import BotNameBot
+from ToorneyBot import ToorneyBot
 from typing import Optional
 
 
-def setup(bot: BotNameBot):
+def setup(bot: ToorneyBot):
     @bot.command(name = "shutdown", usage = "[-f force]")
     @commands.is_owner()
     async def shutdown(ctx: commands.Context, flag: Optional[str]):

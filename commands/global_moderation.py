@@ -1,11 +1,11 @@
 from discord.ext import commands
 import discord, typing
-from BotNameBot import BotNameBot
+from ToorneyBot import ToorneyBot
 
 
 class Globalmoderation(commands.Cog):
 
-    def __init__(self, bot: BotNameBot):
+    def __init__(self, bot: ToorneyBot):
         self.bot = bot
 
     @commands.command(name = "globalban", usage = "<UserID>")
@@ -40,5 +40,5 @@ class Globalmoderation(commands.Cog):
         await ctx.send("Done!")
 
 
-def setup(bot: BotNameBot):
+def setup(bot: ToorneyBot):
     bot.add_cog(Globalmoderation(bot))

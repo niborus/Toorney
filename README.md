@@ -1,29 +1,33 @@
-# Supporter
+# Toorney
 
-## Geplanter Funktionsumfang
-Siehe [Issues](https://github.com/niborus/Friendly-Bot/labels/enhancement)
+This is a Open-Source Public Discord Bot, that can connect Toornament.com with Discord.
 
-## Übersetzung aktualisieren
-1. Generieren der pot-Datei: `pygettext -d locale/pots/guess .`
-1. Alle pot-Dateien zusammenführen: `msgcat locale/pots/*.pot > locale/base.pot`
-1. pot-Datei in po mergen: `msgmerge -U locale/{lang}/LC_MESSAGES/interface.po locale/base.pot`
+## Using the Public Version:
 
-## Aufbau eines Command-Help-Text
+You can invite the Public Bot with one of the following links:
 
-### Description
+- [Admin](https://discord.com/api/oauth2/authorize?client_id=792863663609348106&permissions=8&scope=bot%20applications.commands)
+This isn't a recommended option, but it's a option.
+- [Nearly all permissions](https://discord.com/api/oauth2/authorize?client_id=792863663609348106&permissions=2147483633&scope=bot%20applications.commands)
+This is useful if you want to be sure every future update is working correctly, without renew permissions.
+- [Recommended](https://discord.com/api/oauth2/authorize?client_id=792863663609348106&permissions=490204272&scope=bot%20applications.commands)
+My favorite. Not too much, not too less.
+- [Minimalistic](https://discord.com/api/oauth2/authorize?client_id=792863663609348106&permissions=379968&scope=bot%20applications.commands)
+At least you can interact with the Bot.
 
-Dies sollte die eigentliche Beschreibung des Befehls sein. Was macht er, was braucht er?
-Nachricht wird im Hilfsbefehl des Commands ganz oben angezeigt.
+All the Links above include the `applications.commands`-Permission, which enables slash commands.
+(We don't have slash-commands yet)
 
-### Brief
+If you don't want to add `applications.commands`-Permission, use one of the following links:
 
-Kurzer Hilfstext für den Befehl. (Für einzelne Zeile)
+- [Admin](https://discord.com/api/oauth2/authorize?client_id=792863663609348106&permissions=8&scope=bot),
+[Nearly all permissions](https://discord.com/api/oauth2/authorize?client_id=792863663609348106&permissions=2147483633&scope=bot),
+[Recommended](https://discord.com/api/oauth2/authorize?client_id=792863663609348106&permissions=490204272&scope=bot),
+[Minimalistic](https://discord.com/api/oauth2/authorize?client_id=792863663609348106&permissions=379968&scope=bot)
 
-### Help
+## For Developer:
 
-Langer Hilfstext für den Befehl.
-
-### short_doc
-
-Eine Kurz-Dokumentation des Befehls. **Nicht manuell vergeben!**
-Es ist `brief` oder Zeile 1 von `help`.
+### Refresh Translations
+1. Generate a pot-File: `pygettext -d locale/pots/guess .`
+1. Merge all Pot-Files: `msgcat locale/pots/*.pot > locale/base.pot`
+1. Merge Pot-Files to Po-Files: `msgmerge -U locale/{lang}/LC_MESSAGES/interface.po locale/base.pot`

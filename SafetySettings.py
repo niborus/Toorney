@@ -6,6 +6,7 @@ from customFunctions import filehandling
 
 logger = logging.getLogger("discord")
 
+
 class SafetySettings:
 
     def __init__(self):

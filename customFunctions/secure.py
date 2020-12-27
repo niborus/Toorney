@@ -2,13 +2,13 @@ import logging
 
 from discord.ext import commands
 
-from BotNameBot import BotNameBot
+from ToorneyBot import ToorneyBot
 from CustomErrors import UserBanned, GlobalMute, UserIsBot
 
 logger = logging.getLogger("discord")
 
 
-def setup(bot: BotNameBot):
+def setup(bot: ToorneyBot):
     # Initialisiere das Kern-Programm
 
     @bot.check

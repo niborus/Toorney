@@ -1,6 +1,7 @@
 import asyncio
 import asyncpg
 import logging
+import psycopg2
 import typing
 from collections.abc import Iterable
 
@@ -22,7 +23,7 @@ class SQLRequest:
         self.result = result
 
 
-async def save_access(requests):
+async def save_access_async(requests):
     connection = None
     try:
         connection = await asyncpg.connect(host = SECRETS.SQL_Login.host, database = "supporter",
@@ -60,25 +61,55 @@ async def save_access(requests):
 
 async def save_write(sql_statement: str, parameters: typing.Optional[Iterable] = None, max_changing_rows=-1):
     r = SQLRequest(sql_statement, parameters, max_changing_rows, False)
-    await save_access([r])
+    await save_access_async([r])
     return r.result
 
 
 async def save_read(sql_statement: str, parameters: typing.Optional[Iterable] = None):
     r = SQLRequest(sql_statement, parameters, 0, True)
-    await save_access([r])
+    await save_access_async([r])
     return r.result
+
+
+def save_access_sync(requests):
+    connection = None
+    try:
+        connection = psycopg2.connect(host = SECRETS.SQL_Login.host, database = "supporter",
+                                      user = SECRETS.SQL_Login.user, password = SECRETS.SQL_Login.passwd)
+        cursor = connection.cursor()
+
+        for request in requests:
+            logger.debug(
+                f'Executing SQL. RO: {request.ro}:\n  "{request.query}"\n  with Parameters: {request.parameters}')
+            cursor.execute(request.query, request.parameters)
+
+            if not request.ro:
+                if cursor.rowcount <= request.max_changing_rows or request.max_changing_rows == -1:
+                    connection.commit()
+                    request.add_result(cursor.rowcount)
+                else:
+                    connection.rollback()
+                    raise ToManyRowsChanged(expected = request.max_changing_rows, received = cursor.rowcount)
+
+            else:
+                connection.rollback()
+                rows = cursor.fetchall()
+                request.add_result(rows)
+
+    except Exception as err:
+        raise err
+    finally:
+        if connection is not None:
+            connection.close()
 
 
 def sync_save_read(sql_statement: str, parameters: typing.Optional[Iterable] = None):
     r = SQLRequest(sql_statement, parameters, 0, True)
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(save_access([r]))
+    save_access_sync([r])
     return r.result
 
 
 def sync_save_write(sql_statement: str, parameters: typing.Optional[Iterable] = None, max_changing_rows=-1):
     r = SQLRequest(sql_statement, parameters, max_changing_rows, False)
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(save_access([r]))
+    save_access_sync([r])
     return r.result
