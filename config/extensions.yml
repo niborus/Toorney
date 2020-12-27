@@ -1,0 +1,28 @@
+# List contains the extensions you want to load, unload or dismiss.
+# It must be dot separated like regular Python imports if accessing a sub-module. e.g. foo.test if you want to import foo/test.py
+# You can't have dots in the Folder or Filename (except .py)
+# Files that are not ending on .py, start with a underscore or contain additional dots will always be ignored
+# You can create an extensions.local.yml-File which won't get committed. This will be merged with the extensions.yml-File
+#
+# Whitelist contains Folders with extensions-Files only and extensions-Files
+Whitelist:
+  Folders:
+    - commands
+
+  Files:
+    - error
+    - customFunctions.secure
+
+  # Unloaded extensions need to part of Folders or Files.
+  Unloaded:
+
+
+# Blacklisted Extensions will be removed from the Whitelist.
+# The Overwriting Hierarchy is:
+# Whitelisted folders < Blacklisted Folders < Whitelisted Files < Blacklisted Files
+Blacklist:
+  Folders:
+
+  Files:
+
+  Unloaded:

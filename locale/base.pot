@@ -1,0 +1,1284 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"#-#-#-#-#  guess.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2020-12-06 20:12+CET\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.5\n"
+"#-#-#-#-#  help_text.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2020-09-20 15:04+CEST\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: SupporterBot\n"
+
+#: commands/FollowChannel.py:87
+msgid ""
+"To follow the Channel *{channel_name}* click [this link]({url}) or copy the "
+"link below in you are browser.\n"
+":warning: This is a personalized Link. **Do not** share it with anyone."
+msgstr ""
+
+#: commands/FollowChannel.py:91
+msgid "Link"
+msgstr ""
+
+#: commands/FollowChannel.py:95
+msgid "Please turn on your Private Messages."
+msgstr ""
+
+#: commands/FollowChannel.py:97
+msgid "Please check your Private Messages."
+msgstr ""
+
+#: commands/FollowChannel.py:120
+msgid "There is no message with this ID in this channel."
+msgstr ""
+
+#: commands/FollowChannel.py:123
+msgid "This message has no content. I am only able to send content."
+msgstr ""
+
+#: commands/FollowChannel.py:127
+msgid ""
+"%i Messages were send.\n"
+"**Please note that this command will be deactivated after November 7, 2020."
+"** See `s.upcoming` for more information."
+msgstr ""
+
+#: commands/FollowChannel.py:130
+msgid ""
+"Discord denied me to send this webhook. Please reach out for the Bot Support "
+"Team."
+msgstr ""
+
+#: commands/about.py:15
+msgid ""
+"Do you need help, want to make a suggestion or report a bug?\n"
+"[Join our Support-Server.](https://discord.gg/QFhEhpG)\n"
+"\n"
+"Do you need to contact to developer per E-Mail?\n"
+"Write me a private message with `s.mail`."
+msgstr ""
+
+#: commands/about.py:18
+msgid "Contact:"
+msgstr ""
+
+#: commands/about.py:29
+msgid "Contact the developer."
+msgstr ""
+
+#: commands/about.py:30
+msgid ""
+"If you need help with the bot or want to make a suggestion, please make this "
+"on [our Support-Server](https://discord.gg/QFhEhpG).\n"
+"Use this E-Mail Address **only** for Bug-Reports and vulnerable messages."
+msgstr ""
+
+#: commands/about.py:35
+msgid "E-Mail Address:"
+msgstr ""
+
+#: commands/about.py:35
+msgid "niborus@yunamio.de"
+msgstr ""
+
+#: commands/about.py:36
+msgid ""
+"[0xBA853A5A53E8EDD1](https://keys.mailvelope.com/pks/lookup?"
+"op=get&search=niborus@yunamio.de)\n"
+"Fingerprint:\n"
+"`1A7E DDE1 23BD 71FC C087 613D BA85 3A5A 53E8 EDD1`"
+msgstr ""
+
+#: commands/about.py:38
+msgid "Encryption:"
+msgstr ""
+
+#: commands/about.py:39
+msgid ""
+"If you are writing your E-Mails in a browser like Chrome, Firefox or Edge, "
+"you can use the open-source plugin extension [Mailvelope](https://www."
+"mailvelope.com/en).\n"
+"Look up the website from [Jugendhackt](https://howtopgp.jugendhackt.de/#/) "
+"to get more information and good software for other devices."
+msgstr ""
+
+#: commands/about.py:43
+msgid "How to encrypt:"
+msgstr ""
+
+#: commands/about.py:52
+msgid "Upcoming Changes."
+msgstr ""
+
+#: commands/about.py:54
+msgid ""
+"The FollowChannel Module was an alternative for Discords AnnouncementChannel "
+"for those developers, who couldn't afford a Game License. When Discord "
+"enabled the [Community-Servers](https://support.discord.com/hc/de/"
+"articles/360047132851-Enabling-Your-Community-Server) for every server, they "
+"also enabled the AnnouncementChannel for every Server.\n"
+"Therefore, the FollowChannel Module from Supporter is no longer useful and "
+"will be removed from the Bot. There is a transition period, so you can set "
+"up a AnnouncementChannel and inform everyone about the changes.\n"
+"The FollowChannel Module, which include the commands `follow` and `publish` "
+"will be deactivated at **November 7, 2020**. This is the same date, when "
+"Discord will drop the support for the old domain *discordapp.com*."
+msgstr ""
+
+#: commands/about.py:64
+msgid "FollowChannel"
+msgstr ""
+
+#: commands/autoreaction.py:27
+msgid "Discord Messages can only contain up to {0} Reactions."
+msgstr ""
+
+#: commands/autoreaction.py:30
+msgid "You have to send at least one emoji or it won't work."
+msgstr ""
+
+#: commands/autoreaction.py:37
+msgid ""
+"The following Emote(s) are from servers I have not joined. I can not react "
+"with those emotes:\n"
+"{emotes}"
+msgstr ""
+
+#: commands/autoreaction.py:111
+msgid ""
+"Use *{0}autoreaction remove <Channel>* to remove a channel\n"
+"or *{0}autoreaction add <Channel> [\\*Reactions]* to change or add reactions "
+"to a channel."
+msgstr ""
+
+#: commands/autoreaction.py:113
+msgid "Channels with Reaction:"
+msgstr ""
+
+#: commands/autoreaction.py:130 commands/autoreaction.py:134
+msgid "Reaction Channels"
+msgstr ""
+
+#: commands/autoreaction.py:135
+msgid "There are no auto-reaction channels on this server."
+msgstr ""
+
+#: commands/autoreaction.py:174 commands/autoreaction.py:191
+#: commands/autoreaction.py:229
+msgid ":thumbsup: Done!"
+msgstr ""
+
+#: commands/autoreaction.py:185
+msgid "This channel has no auto reaction set up."
+msgstr ""
+
+#: commands/autoreaction.py:217 error.py:145
+msgid ""
+":question: The Usage of that command is: `{0.prefix}{0.command."
+"qualified_name} {0.command.usage}`"
+msgstr ""
+
+#: commands/help.py:37
+msgid ""
+"Hi, I'm the SupporterBot.\n"
+"I'm here to help you managing your support server and your Bot.\n"
+"My most important features are my *Watchlist* and my *Opening-Hours-"
+"Management*."
+msgstr ""
+
+#: commands/help.py:44
+msgid ""
+"The Watchlist is a list of bots, I keep my eye on. If one of the bots goes "
+"offline, I will send you a message, so you can solve this error."
+msgstr ""
+
+#: commands/help.py:48 commands/help.py:58
+msgid ""
+"\n"
+"If you want to know more about this, type `{command}`."
+msgstr ""
+
+#: commands/help.py:51 commands/offlinecheck.py:271
+msgid "Watchlist"
+msgstr ""
+
+#: commands/help.py:54
+msgid ""
+"The Opening Hours Management will close and open channel at a given time. "
+"This allows you, to end and start your support times as you like."
+msgstr ""
+
+#: commands/help.py:61
+msgid "Opening Hours Management"
+msgstr ""
+
+#: commands/help.py:64
+msgid ""
+"Of cause, this bot has many other helpful functions. To see all commands, "
+"type `{list_command}` or get help to a command by typing `{help_command} "
+"<command>`.\n"
+"If you need support, the Supporter-Support-Team will help on our [Support-"
+"Server]({server_invite}).\n"
+"To invite me to another server, click [this link]({bot_invite})."
+msgstr ""
+
+#: commands/help.py:71
+msgid "Other Functions"
+msgstr ""
+
+#: commands/help.py:74
+msgid ""
+"Language is difficult. But luckily, I can speak multiple languages. At the "
+"moment, these are english and german.\n"
+"If you want to change the language, type `{command}`."
+msgstr ""
+
+#: commands/help.py:79
+msgid "Language"
+msgstr ""
+
+#: commands/help.py:91
+msgid "Usage"
+msgstr ""
+
+#: commands/help.py:146
+msgid ""
+"Type {0}{1} command for more info on a command.\n"
+"You can also type {0}{1} category for more info on a category."
+msgstr ""
+
+#: commands/invite.py:12
+msgid ""
+"You can invite me with [this](https://discord.com/api/oauth2/authorize?"
+"client_id=667840807276904477&permissions=67488832&scope=bot) Link."
+msgstr ""
+
+#: commands/offlinecheck.py:164
+msgid "Please use a subcommand..."
+msgstr ""
+
+#: commands/offlinecheck.py:185
+msgid "This is a role and not a Bot. Try it with a Bot."
+msgstr ""
+
+#: commands/offlinecheck.py:189
+msgid "This is not a bot. I won't watch a normal User for you."
+msgstr ""
+
+#: commands/offlinecheck.py:194
+msgid "You can't send an message to someone else then yourself."
+msgstr ""
+
+#: commands/offlinecheck.py:199
+msgid "This won't work."
+msgstr ""
+
+#: commands/offlinecheck.py:202
+msgid "I can't write in this channel."
+msgstr ""
+
+#: commands/offlinecheck.py:209
+msgid "Timeout needs to be less than 10 Minutes (600 Seconds)."
+msgstr ""
+
+#: commands/offlinecheck.py:213
+msgid "The message can't be longer then 2000 chars."
+msgstr ""
+
+#: commands/offlinecheck.py:217
+msgid "I'm sending a test-message. Please wait..."
+msgstr ""
+
+#: commands/offlinecheck.py:218
+msgid ""
+"The following is a Test-Message. If you can see the next message, everything "
+"was set up correctly."
+msgstr ""
+
+#: commands/offlinecheck.py:223
+msgid "I couldn't send the Test-Message Correctly. Please Check your Input."
+msgstr ""
+
+#: commands/offlinecheck.py:238
+msgid ":white_check_mark: I will warn you if {} goes offline."
+msgstr ""
+
+#: commands/offlinecheck.py:247
+msgid "I can't remove {}. I'm not watching this Bot."
+msgstr ""
+
+#: commands/offlinecheck.py:254
+msgid ":white_check_mark: I will not longer warn you if {} goes offline."
+msgstr ""
+
+#: commands/offlinecheck.py:269
+msgid "I'm watching no bots in this guild."
+msgstr ""
+
+#: commands/offlinecheck.py:275
+msgid "Can't find the member on this guild."
+msgstr ""
+
+#: commands/offlinecheck.py:280
+msgid "muted"
+msgstr ""
+
+#: commands/offlinecheck.py:282
+msgid "active"
+msgstr ""
+
+#: commands/offlinecheck.py:298
+msgid ""
+"<@!{}> We need to restart the Supporter Bot now and can't wait to tell you "
+"that your bot is offline."
+msgstr ""
+
+#: commands/opening.py:48
+msgid "Sorry, we're closed!"
+msgstr ""
+
+#: commands/opening.py:49
+msgid "This channel is closed. You are unable to write in this channel."
+msgstr ""
+
+#: commands/opening.py:51 commands/opening.py:276 commands/opening.py:280
+msgid "Opening Hours"
+msgstr ""
+
+#: commands/opening.py:52
+msgid ""
+"```\n"
+"Daily: From {start} to {end}.\n"
+"Time Zone: {tz}\n"
+"```"
+msgstr ""
+
+#: commands/opening.py:216
+msgid "Please use a subcommand. (`new`, `remove`, `list`)"
+msgstr ""
+
+#: commands/opening.py:245
+msgid "OK. I will open this channel from {open_time} to {closing_time}."
+msgstr ""
+
+#: commands/opening.py:259
+msgid "I never managed this channel."
+msgstr ""
+
+#: commands/opening.py:261
+msgid "Done!"
+msgstr ""
+
+#: commands/opening.py:272
+msgid ""
+"Use `{0}opening remove <Channel>` to remove a Channel\n"
+"or `{0}opening add <Channel> <OpeningTime> <ClosingTime>` to change or add a "
+"channel."
+msgstr ""
+
+#: commands/opening.py:274
+msgid "Closed Channels:"
+msgstr ""
+
+#: commands/opening.py:281
+msgid "There are no timed channels on this server."
+msgstr ""
+
+#: commands/ping.py:11
+msgid ""
+":ping_pong: Pong!\n"
+"Heartbeat: ``{heartbeat}``\n"
+"Reaction Time: ``{reaction_time}``{fault_star}\n"
+"Message Circuit: ``{roundabout}``\n"
+"\n"
+"{fault_text}"
+msgstr ""
+
+#: commands/ping.py:23
+msgid "\\**Measurement errors possible*"
+msgstr ""
+
+#: commands/setlang.py:14
+msgid "English"
+msgstr ""
+
+#: commands/setlang.py:14
+msgid "German"
+msgstr ""
+
+#: commands/setlang.py:26
+msgid "Please choose one of the following languages: {0}"
+msgstr ""
+
+#: commands/setlang.py:33
+msgid "I set the language to **English**!"
+msgstr ""
+
+#: commands/tag.py:115
+msgid ""
+"Please use a subcommand: `{0}tags <create|edit|delete|list|settings>`! (see "
+"`{0}help tags`)\n"
+"To call tags, use `{0}tag <name>` (without `s`) or `{0}t <name>`.\n"
+"Did you know you can create Tags with more than one word? Just use quotation "
+"marks: `{0}tags create \"a long name\" Content of the Tag`.\n"
+"You can call them like you would normally do (`{0}tag a long name`). To add "
+"additional text, you can mention someone (`{0}t a long name @someone`) or "
+"write the additional text into a new line: ```{0}t a long name\n"
+"Additional Text```"
+msgstr ""
+
+#: commands/tag.py:142
+msgid ""
+"This is an invalid name for an Tag. Tag names can't be longer than 128 "
+"characters, can't contain the symbols `<` or ``\\u200b`\\u200b``, can't "
+"contain mentions and need to be in one line. Some other characters might be "
+"forbidden too."
+msgstr ""
+
+#: commands/tag.py:148 commands/tag.py:200
+msgid "The content of your tag contains illegal characters."
+msgstr ""
+
+#: commands/tag.py:157
+msgid "This tag already exists."
+msgstr ""
+
+#: commands/tag.py:159
+msgid "I created the tag **{}**."
+msgstr ""
+
+#: commands/tag.py:173
+msgid "There is no tag called `{}` in this guild."
+msgstr ""
+
+#: commands/tag.py:177 commands/tag.py:209
+msgid "There is no tag called `{}` in this guild or you don't own it."
+msgstr ""
+
+#: commands/tag.py:184
+msgid "I deleted the tag **{}**."
+msgstr ""
+
+#: commands/tag.py:211
+msgid "I edit the tag **{}**."
+msgstr ""
+
+#: commands/tag.py:233
+msgid "No Tags found in this Guild."
+msgstr ""
+
+#: commands/tag.py:266
+msgid ""
+"Please use a subcommand: `{0}{1} <edit|call> <public|protected>`:\n"
+"`{0}{1} edit public`: Allow everyone in this guild to crate new tags and "
+"edit their own tags.\n"
+"`{0}{1} edit protected`: Only allow Members with *Manage Messages*-"
+"Permission to crate new tags and edit their own tags.\n"
+"`{0}{1} call public`: Allow everyone in this guild to call tags.\n"
+"`{0}{1} call protected`: Only allow Members with *Manage Messages*-"
+"Permission to call tags."
+msgstr ""
+
+#: commands/tag.py:285
+msgid "OK. Every Member can create new tags and edit their own."
+msgstr ""
+
+#: commands/tag.py:289
+msgid ""
+"OK. Only Members with *Manage Messages*-Permission can create new tags and "
+"edit their own."
+msgstr ""
+
+#: commands/tag.py:291
+msgid ""
+"Please select the right setting: `{0}{1} <public|protected>`:\n"
+"`{0}{1} public`: Allow everyone in this guild to crate new tags and edit "
+"their own tags.\n"
+"`{0}{1} protected`: Allow only Members with *Manage Messages*-Permissions to "
+"crate new tags and edit their own tags."
+msgstr ""
+
+#: commands/tag.py:308
+msgid "OK. Every Member can call tags."
+msgstr ""
+
+#: commands/tag.py:311
+msgid "OK. Only Members with *Manage Messages*-Permission can call tags."
+msgstr ""
+
+#: commands/tag.py:313
+msgid ""
+"Please select the right setting: `{0}{1} <public|protected>`:\n"
+"`{0}{1} public`: Allow everyone in this guild to call tags.\n"
+"`{0}{1} protected`: Allow only Members with *Manage Messages*-Permission to "
+"call tags."
+msgstr ""
+
+#: commands/tag.py:342
+msgid "You didn't provide a valid tag name."
+msgstr ""
+
+#: commands/tag.py:376
+msgid "I could not find the tag `{}`."
+msgstr ""
+
+#: commands/tag.py:378
+msgid ""
+"I could not find either one of the following tags:\n"
+"{}"
+msgstr ""
+
+#: commands/time_cmd.py:22
+msgid ""
+"The current time on this guild is:\n"
+"**%H:%M:%S** on %A, %B %d %Y.\n"
+"The current timezone is %Z (UTC%z)."
+msgstr ""
+
+#: commands/time_cmd.py:31
+msgid ""
+"We are working with the 24-hours format. The Bot is not able to identify a "
+"time like *5pm*.\n"
+"The simplest way to write a time is like this: `23:59:39`. This is 23 hours, "
+"59 minutes and 39 seconds after midnight.\n"
+"You can separate hours from minutes and minutes from seconds with `-` `:` "
+"and `.`. So `5.30.59` and `13-08-23` are valid inputs.\n"
+"If the number is smaller then ten, you do not need to add a zero. So `5:7:0` "
+"is also valid.\n"
+"If you don't use seconds, you can write `13:15` or `23.59`. This works with "
+"hours too, so you can only write the hour: `12` (high noon), `0` "
+"(midnight).\n"
+"If you write 4 or 6 Digits without a symbol to separate, the first two will "
+"be the hours, the next two the minutes and the last two the seconds. So you "
+"can write: `0530` (5:30) or `200530` (20:05:30)."
+msgstr ""
+
+#: commands/time_cmd.py:52
+msgid "Your current time zone is {tz}."
+msgstr ""
+
+#: commands/time_cmd.py:54
+msgid ""
+"\n"
+"You can change the time zone with `%s set <time zone>`."
+msgstr ""
+
+#: commands/time_cmd.py:66
+msgid ""
+"Please choose one of the time zones you can find there:\n"
+"{link}\n"
+"or see the available time zones by using `{prefix}timezone list`."
+msgstr ""
+
+#: commands/time_cmd.py:77
+msgid "I set the time zone for this guild to **%s**."
+msgstr ""
+
+#: commands/time_cmd.py:79
+msgid ""
+"This is not a valid time zone.\n"
+"Note that names are Case-Sensitive.\n"
+msgstr ""
+
+#: commands/time_cmd.py:88
+msgid "Use `%s` to see only common time zones."
+msgstr ""
+
+#: commands/time_cmd.py:97 commands/time_cmd.py:105
+msgid "Without Category"
+msgstr ""
+
+#: commands/time_cmd.py:119
+msgid ""
+"You can see the time zones below, listed by their category.\n"
+"To choose a time zone, use `{0} <Category> <timezone>` or `{0} <Category>/"
+"<timezone>`.\n"
+"For time zones without Category, use `{0} <timezone>`.\n"
+"Names are Case-Sensitive."
+msgstr ""
+
+#: commands/utils_cmd.py:91
+msgid "You didn't provide a valid input."
+msgstr ""
+
+#: commands/utils_cmd.py:149
+msgid "There where no numbers left to choose from. Try a different range."
+msgstr ""
+
+#: commands/utils_cmd.py:159
+msgid "Length has to be larger than {min} and smaller or equal than {max}!"
+msgstr ""
+
+#: commands/utils_cmd.py:198
+msgid "Permissions for {member} in {channel}"
+msgstr ""
+
+#: commands/utils_cmd.py:201
+msgid ""
+"You can only get Channel-Permissions for Members, not Roles or Integers."
+msgstr ""
+
+#: commands/utils_cmd.py:206
+msgid "Permission {perm_int}"
+msgstr ""
+
+#: commands/utils_cmd.py:209
+msgid "Permissions for {role}"
+msgstr ""
+
+#: commands/utils_cmd.py:212
+msgid "Permissions for {member}"
+msgstr ""
+
+#: commands/utils_cmd.py:213
+msgid ""
+"This only takes into consideration the server permissions and not most of "
+"the implied permissions or any of the channel permission overwrites. For "
+"100% accurate permission calculation, provide a Channel Attribute."
+msgstr ""
+
+#: commands/utils_cmd.py:218
+msgid "Permission-Integer Octal"
+msgstr ""
+
+#: commands/utils_cmd.py:219
+msgid "Permission-Integer Decimal"
+msgstr ""
+
+#: commands/utils_cmd.py:220
+msgid "Permission-Integer Hexadecimal"
+msgstr ""
+
+#: commands/utils_cmd.py:244
+msgid "General Permissions"
+msgstr ""
+
+#: commands/utils_cmd.py:245
+msgid "Text Permissions"
+msgstr ""
+
+#: commands/utils_cmd.py:246
+msgid "Voice Permissions"
+msgstr ""
+
+#: commands/utils_cmd.py:265
+msgid "This is not a valid ID."
+msgstr ""
+
+#: commands/utils_cmd.py:276
+msgid "%d/%m/%y %I:%M %p %Z"
+msgstr ""
+
+#: commands/utils_cmd.py:279
+msgid "%Y-%m-%dT%H:%M:%S.{ms}%z"
+msgstr ""
+
+#: commands/utils_cmd.py:284
+msgid "ID Decimal"
+msgstr ""
+
+#: commands/utils_cmd.py:284
+msgid "ID Hexadecimal"
+msgstr ""
+
+#: commands/utils_cmd.py:284
+msgid "ID Octal"
+msgstr ""
+
+#: commands/utils_cmd.py:285
+msgid "ISO 8601"
+msgstr ""
+
+#: commands/utils_cmd.py:285
+msgid "Time"
+msgstr ""
+
+#: commands/utils_cmd.py:285
+msgid "Unix-Timestamp (Milliseconds)"
+msgstr ""
+
+#: commands/utils_cmd.py:286
+msgid "Internal Process ID"
+msgstr ""
+
+#: commands/utils_cmd.py:286
+msgid "Internal Worker ID"
+msgstr ""
+
+#: commands/utils_cmd.py:287
+msgid "Increment"
+msgstr ""
+
+#: error.py:36
+msgid ""
+"If you don't think, you made a mistake, please reach out for the Bot-Support "
+"({link})."
+msgstr ""
+
+#: error.py:74
+msgid ""
+"Something went terrible wrong while doing this.\n"
+"Please reach out for the Bot-Support (https://supporter.yunamio.de/support-"
+"server)."
+msgstr ""
+
+#: error.py:85
+msgid ":no_entry: No. I wan't do this for you. But can I do something else?"
+msgstr ""
+
+#: error.py:87
+msgid ":no_entry: This command has been disabled for security reasons."
+msgstr ""
+
+#: error.py:89
+msgid "This command can only be used in private messages."
+msgstr ""
+
+#: error.py:91
+msgid "This command cannot be used in private messages."
+msgstr ""
+
+#: error.py:120
+msgid "I could not find the message `{argument}`."
+msgstr ""
+
+#: error.py:121
+msgid "I could not find the member `{argument}`."
+msgstr ""
+
+#: error.py:122
+msgid "I could not find the user `{argument}`."
+msgstr ""
+
+#: error.py:123
+msgid "I could not find the channel `{argument}`."
+msgstr ""
+
+#: error.py:124
+msgid "I could not find the role `{argument}`."
+msgstr ""
+
+#: error.py:125
+msgid "I could not find the emoji `{argument}`."
+msgstr ""
+
+#: error.py:134
+msgid ""
+"I could not read this time. Type `{0}time help` to get help on how to write "
+"a time so I can read it."
+msgstr ""
+
+#: error.py:137
+msgid ""
+"I looked to the clock, but I think, this time is impossible. Type `{0}time "
+"help `to get help on how to write a time so I can read it."
+msgstr ""
+
+#: error.py:140
+msgid ":no_entry: Not so fast. Try again in %s second(s)."
+msgstr ""
+
+#: error.py:142
+msgid ":no_entry: You are not allowed to do this."
+msgstr ""
+
+#: error.py:150
+msgid ""
+"I don't have all permissions to do this!\n"
+"{0.support_server}"
+msgstr ""
+
+#: error.py:152
+msgid ""
+"At least one of the resources doesn't exist.\n"
+"{0.support_server}"
+msgstr ""
+
+#: myfunctions/Converters.py:64
+msgid ""
+"I could not identify the emoji: {emoji}\n"
+"Please react on this message with the emoji {emoji}.\n"
+"*Type `c` or `cancel` to cancel.*"
+msgstr ""
+
+msgid "(<Extension>/'*' for all) ['-e' for error message]"
+msgstr ""
+
+msgid "Show the Version of the Bot"
+msgstr ""
+
+msgid ""
+"Say a text without letting the bot mention user, roles or everyone.\n"
+"You might still mention user, roles or everyone while sending the command."
+msgstr ""
+
+msgid "Edit a message-"
+msgstr ""
+
+msgid "Load an extension."
+msgstr ""
+
+msgid "Show loaded extensions."
+msgstr ""
+
+msgid "Show all timed channel on this server."
+msgstr ""
+
+msgid "React to a message with Emotes."
+msgstr ""
+
+msgid "<on/off>"
+msgstr ""
+
+msgid ""
+"Set server wide time zone.\n"
+"This time zone will be used for opening hours and the time-command.\n"
+"To choose a time zone, use `tz list`"
+msgstr ""
+
+msgid "Show all channels with auto-reactions on this server."
+msgstr ""
+
+msgid "Shows this message"
+msgstr ""
+
+msgid "<Channel>"
+msgstr ""
+
+msgid ""
+"Update or see the time zone of the server.\n"
+"All settings will be converted to this new time."
+msgstr ""
+
+msgid ""
+"Show the Permissions of an User, Role or Permission-Integer.\n"
+"If a Channel is given, it will return the Permission-Integer of the Member "
+"in that Channel.\n"
+"Otherwise, it will return the general permissions in the server."
+msgstr ""
+
+msgid "<Message Link or Text to analyse>"
+msgstr ""
+
+msgid "<Channel> [*Emojis]"
+msgstr ""
+
+msgid "Get informed about upcoming changes from Supporter."
+msgstr ""
+
+msgid "Unload an extension."
+msgstr ""
+
+msgid ""
+"Manage Opening Hours from your Channels.\n"
+"Channels, that have opening hours are called: \"timed channel\".\n"
+"Members can't write in timed channels (or connect to timed Voice-Channels) "
+"after the closing time until the opening time.\n"
+"The Bot will remove/add the Channel-Specific-Permissions `Write Messages` or "
+"`Connect` to/from @everyone at the choosen time."
+msgstr ""
+
+msgid ""
+"Get the current time.\n"
+"Use `time help` (not `help time`) to get help on how to write a time "
+"argument."
+msgstr ""
+
+msgid "[-f force]"
+msgstr ""
+
+msgid "<logger> <level>"
+msgstr ""
+
+msgid "List all Tags of everyone or one user in this guild."
+msgstr ""
+
+msgid "[Channel] <Message> [*Emotes]"
+msgstr ""
+
+msgid "<Name of the Tag>"
+msgstr ""
+
+msgid "<UserID>"
+msgstr ""
+
+msgid "Measure the latency of the Bot."
+msgstr ""
+
+msgid "<channel> <open/close>"
+msgstr ""
+
+msgid ""
+"Publish a message from a channel.\n"
+"Every webhook associated with that Channel will be executed.\n"
+"\n"
+"Only works with text and not with images or files.\n"
+"You can not send any mentions by the webhook, so don't worry about @​everyone "
+"and @​here-Tags.\n"
+"\n"
+"Requires Manage Messages and Send Messages Permissions in the tagged "
+"channel.\n"
+"\n"
+"This Command will be deactivated after November 7, 2020. See `s.upcoming` "
+"for more information."
+msgstr ""
+
+msgid "Check, if your Bot is offline."
+msgstr ""
+
+msgid ""
+"Add Opening Hours to a Channel or change the time.\n"
+"If the channel is already a timed channel, you will change the Time to the "
+"new time.\n"
+"If the channel is not already a timed channel, it will become one.\n"
+"Use `time help` (not `help time`) to get help on how to write a time "
+"argument."
+msgstr ""
+
+msgid "<channel> <message_id>"
+msgstr ""
+
+msgid "[hex/url] [nbytes]"
+msgstr ""
+
+msgid ""
+"Adding a Bot to the Watchlist.\n"
+"Bot: Name or Mention of the Bot I have to watch.\n"
+"Channel or User: Who or what channel will receive the Message\n"
+"Delay: How long wo wait, after the bot is offline, until I send the Message. "
+"(Needs to be between 1 and 600 Seconds)\n"
+"Message: The message that I will send. Mentions won't get suppressed.\n"
+"You will receive a test-message after setting up the bot."
+msgstr ""
+
+msgid "[start] [stop] [range]"
+msgstr ""
+
+msgid "<type> <id>"
+msgstr ""
+
+msgid "<Name of the Tag> <new Content>"
+msgstr ""
+
+msgid ""
+"An alternative for Discord's Announcement-Channels.\n"
+"\n"
+"This Category will be deactivated after November 7, 2020. See `s.upcoming` "
+"for more information.\n"
+"\n"
+"Messages need to be send individually via the 'publish'-Command.\n"
+"Only works with text and not with images or files.\n"
+"No Webhook will mention anybody."
+msgstr ""
+
+msgid ""
+"Change an tag.\n"
+"This tag must be yours.\n"
+"This is irreversible."
+msgstr ""
+
+msgid "Show all common Time Zones."
+msgstr ""
+
+msgid ""
+"Delete an old tag.\n"
+"This tag must either be yours or you need manage messages permissions to do "
+"this.\n"
+"This is irreversible."
+msgstr ""
+
+msgid ""
+"Create a Webhook on any server to follow messages from this server.\n"
+"\n"
+"You will not receive any mentions from the webhook, so don't worry about @​"
+"everyone and @​here-Tags.\n"
+"\n"
+"This Command will be deactivated after November 7, 2020. See `s.upcoming` "
+"for more information."
+msgstr ""
+
+msgid "<message> <Text>"
+msgstr ""
+
+msgid "Add or remove bots from the Offline-Alarm List. (Watchlist)"
+msgstr ""
+
+msgid ""
+"Change Logger Level\n"
+"logger: discord, own_functions, psql, loop\n"
+"default: discord: INFO, psql: INFO, loop: INFO, own_functions: DEBUG\n"
+"levels: debug, info, error, warning, critical"
+msgstr ""
+
+msgid "Get help to our time system."
+msgstr ""
+
+msgid "<User|Role|Permission-Integer> [Channel]"
+msgstr ""
+
+msgid "<Bot>"
+msgstr ""
+
+msgid ""
+"Returns a Random number.\n"
+"`s.random` Returns a Random number *x* with `0 <= x < 100`.\n"
+"`s.random a` Returns a Random number *x* with `0 <= x < a`.\n"
+"`s.random a b` Returns a Random number *x* with `a <= x < b`.\n"
+"`s.random a b c` Returns a Random number *x* with `a <= x < b` with a range "
+"of c."
+msgstr ""
+
+msgid "Shut down the Bot."
+msgstr ""
+
+msgid ""
+"Crate a new tag.\n"
+"Tags can be a single word or multiple words.\n"
+"Tag names allow any Character, except the Less-Than Sign (<) or an "
+"apostrophe (`).\n"
+"Tag names can't contain mentions and need to be in one line.\n"
+"Tag names need to be one char at least and 128 Chars Maximum.\n"
+"Tag names do not separate between upper- and lowercase"
+msgstr ""
+
+msgid "[Channel] <Text>"
+msgstr ""
+
+msgid "Select, who is allowed to call tags."
+msgstr ""
+
+msgid "<Extension> ['-e' for error message]"
+msgstr ""
+
+msgid ""
+"Call a tag.\n"
+"If the tag name is only one Word long, you can add additional information by "
+"writing it after the tag name.\n"
+"If the tag is longer, you can add additional text by writing it into a new "
+"line or mention someone after the tag name.\n"
+"To manage tags, user the `tags`-Command (with `s`)"
+msgstr ""
+
+msgid "Manage the Tags on the server."
+msgstr ""
+
+msgid "Analyses the Characters of a Message or String"
+msgstr ""
+
+msgid "Generates a random Pin-Number."
+msgstr ""
+
+msgid "Show all Commands the bot has to offer."
+msgstr ""
+
+msgid ""
+"<Bot> <Channel or User who will receive the Information> [Delay in Seconds] "
+"<Message>"
+msgstr ""
+
+msgid "Toggle a channel."
+msgstr ""
+
+msgid "Remove a Bot from the Watchlist."
+msgstr ""
+
+msgid "Remove Opening Hours from a Channel."
+msgstr ""
+
+msgid "Get debug information"
+msgstr ""
+
+msgid "<Name of the Tag> [Additional Text will be ignored]"
+msgstr ""
+
+msgid "Generates a random Token."
+msgstr ""
+
+msgid "<DiscordID/Snowflake>"
+msgstr ""
+
+msgid "Make the Bot say something in a Channel."
+msgstr ""
+
+msgid "<Channel> <OpeningTime> <ClosingTime>"
+msgstr ""
+
+msgid "React to every new message in a channel."
+msgstr ""
+
+msgid "Get Information about a Discord ID (Snowflake)."
+msgstr ""
+
+msgid "<public|protected>"
+msgstr ""
+
+msgid "Add or change the Auto-Reaction for a Channel."
+msgstr ""
+
+msgid "<channel>"
+msgstr ""
+
+msgid "[length]"
+msgstr ""
+
+msgid "Show the Invite-Link of the Bot."
+msgstr ""
+
+msgid "[User]"
+msgstr ""
+
+msgid "Get the E-Mail Address of the developer"
+msgstr ""
+
+msgid "<language code>"
+msgstr ""
+
+msgid "Select, who is allowed to crate new tags and edit their own tags."
+msgstr ""
+
+msgid "Start the Closing Hour Loop"
+msgstr ""
+
+msgid "<timezone>"
+msgstr ""
+
+msgid "Reload an extension."
+msgstr ""
+
+msgid "Show the Watchlist from this server."
+msgstr ""
+
+msgid "Remove the Auto-Reaction for a Channel."
+msgstr ""
+
+msgid "<Name> <Content>"
+msgstr ""
+
+msgid "Get information about the bot."
+msgstr ""
+
+# SupporterBot Manuell Text.
+# niborus <niborus@yunamio.de>, 2020.
+#
+#: error.py:100
+msgid "You are missing {0} permission to run this command."
+msgid_plural "You are missing {0} permissions to run this command."
+msgstr[0] ""
+msgstr[1] ""
+
+#: error.py:109
+msgid "Bot requires {0} permission to run this command."
+msgid_plural "Bot requires {0} permissions to run this command."
+msgstr[0] ""
+msgstr[1] ""
+
+# Permissions for all kinds of places
+msgid "Create Instant Invite"
+msgstr ""
+
+msgid "Kick Members"
+msgstr ""
+
+msgid "Ban Members"
+msgstr ""
+
+msgid "Administrator"
+msgstr ""
+
+msgid "Manage Channels"
+msgstr ""
+
+msgid "Manage Server"
+msgstr ""
+
+msgid "Add Reactions"
+msgstr ""
+
+msgid "View Audit Log"
+msgstr ""
+
+msgid "Priority Speaker"
+msgstr ""
+
+msgid "Stream"
+msgstr ""
+
+msgid "Read Messages"
+msgstr ""
+
+msgid "Send Messages"
+msgstr ""
+
+msgid "Send Tts Messages"
+msgstr ""
+
+msgid "Manage Messages"
+msgstr ""
+
+msgid "Embed Links"
+msgstr ""
+
+msgid "Attach Files"
+msgstr ""
+
+msgid "Read Message History"
+msgstr ""
+
+msgid "Mention Everyone"
+msgstr ""
+
+msgid "External Emojis"
+msgstr ""
+
+msgid "View Server Insights"
+msgstr ""
+
+msgid "Connect"
+msgstr ""
+
+msgid "Speak"
+msgstr ""
+
+msgid "Mute Members"
+msgstr ""
+
+msgid "Deafen Members"
+msgstr ""
+
+msgid "Move Members"
+msgstr ""
+
+msgid "Use Voice Activation"
+msgstr ""
+
+msgid "Change Nickname"
+msgstr ""
+
+msgid "Manage Nicknames"
+msgstr ""
+
+msgid "Manage Roles"
+msgstr ""
+
+msgid "Manage Webhooks"
+msgstr ""
+
+msgid "Manage Emojis"
+msgstr ""
