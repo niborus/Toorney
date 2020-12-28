@@ -1,6 +1,8 @@
 import collections
+import re
 from collections.abc import Iterable
 from typing import Union
+from CustomErrors import ToornamentNotFound
 
 from customFunctions import shortsql
 
@@ -136,3 +138,17 @@ def update_guild_setting(guild_id: int, settings: dict) -> None:
 
     else:
         shortsql.sync_save_write("insert into guild_settings (guild_id) values (%s) ON CONFLICT DO NOTHING;", (guild_id,), 1)
+
+
+def get_toornament_id_by_url(url: str):
+    url = url.strip()
+
+    if url.isdecimal():
+        return int(url)
+
+    match = re.search('tournaments/([0-9]+)', url, re.IGNORECASE)
+
+    if not match:
+        raise ToornamentNotFound(url)
+    else:
+        return int(match[1])

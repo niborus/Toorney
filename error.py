@@ -8,7 +8,7 @@ from discord import Webhook
 from discord.ext import commands
 from discord.ext.commands.errors import *
 from discord.errors import *
-from CustomErrors import GlobalMute, UserBanned, UserIsBot, CancelCommandSilent
+from CustomErrors import GlobalMute, UserBanned, UserIsBot, CancelCommandSilent, ToornamentNotFound
 from config.SECRETS import PANIC_WEBHOOK
 from ToorneyBot import ToorneyBot
 from customFunctions.shortdiscord import sanitize
@@ -115,7 +115,7 @@ def setup(bot: ToorneyBot):
             await ctx.send(msg.format(fmt))
 
         elif isinstance(err, (MessageNotFound, MemberNotFound, UserNotFound, ChannelNotFound, RoleNotFound,
-                              EmojiNotFound)):
+                              EmojiNotFound, ToornamentNotFound)):
             err_text = {
                 MessageNotFound: _("I could not find the message `{argument}`."),
                 MemberNotFound: _("I could not find the member `{argument}`."),
@@ -123,6 +123,7 @@ def setup(bot: ToorneyBot):
                 ChannelNotFound: _("I could not find the channel `{argument}`."),
                 RoleNotFound: _("I could not find the role `{argument}`."),
                 EmojiNotFound: _("I could not find the emoji `{argument}`."),
+                ToornamentNotFound: _("I could not find the toornament `{argument}`."),
             }
             for possible_type in err_text.keys():
                 if isinstance(err, possible_type):

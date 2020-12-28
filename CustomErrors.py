@@ -38,3 +38,10 @@ class ToManyRowsChanged(Exception):
 
 class CancelCommandSilent(commands.CommandError):
     """Exception raised to cancel a Command. This should be done silently."""
+
+
+class ToornamentNotFound(commands.BadArgument):
+    """Raised if the Toornament ID cant be figured out."""
+    def __init__(self, argument):
+        self.argument = argument
+        super().__init__('Toornament "{}" not found.'.format(argument))
