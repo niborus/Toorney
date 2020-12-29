@@ -1,5 +1,7 @@
 import collections
 import re
+import toornament
+import discord
 from collections.abc import Iterable
 from typing import Union
 from CustomErrors import ToornamentNotFound
@@ -140,7 +142,7 @@ def update_guild_setting(guild_id: int, settings: dict) -> None:
         shortsql.sync_save_write("insert into guild_settings (guild_id) values (%s) ON CONFLICT DO NOTHING;", (guild_id,), 1)
 
 
-def get_toornament_id_by_url(url: str):
+def get_toornament_id_by_url(url: str, raise_error=True):
     url = url.strip()
 
     if url.isdecimal():
@@ -149,6 +151,22 @@ def get_toornament_id_by_url(url: str):
     match = re.search('tournaments/([0-9]+)', url, re.IGNORECASE)
 
     if not match:
-        raise ToornamentNotFound(url)
+        if raise_error:
+            raise ToornamentNotFound(url)
+        else:
+            return None
     else:
         return int(match[1])
+
+
+def create_embed_for_tournament(tournament: toornament.TournamentDetailed):
+
+    embed = discord.Embed(name = tournament.name, colour = 0x0000ee)
+    embed.description = "discipline: {0.discipline}\n" \
+                        "full_name: {0.full_name}\n" \
+                        "size: {0.size}\n" \
+                        "participant_type: {0.participant_type}\n".format(tournament)
+    if tournament.logo:
+        embed.set_thumbnail(url = tournament.logo.original)
+
+    return embed
