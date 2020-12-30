@@ -11,8 +11,17 @@ import toornament
 
 
 class TournamentData:
+    """Contains all Data about a Tournament."""
     def __init__(self, tournament: toornament.TournamentDetailed, stages: dict, groups: dict,
                  rounds: dict, matches: dict, participants: dict):
+        """
+        :param tournament: TournamentDetailed
+        :param stages: dict[stage-id]: stage-object
+        :param groups: dict[group-id]: group-object
+        :param rounds: dict[round-id]: round-object
+        :param matches: dict[match-id]: match-object
+        :param participants: dict[participant-id]: participant-object
+        """
         self.tournament = tournament
         self.stages = stages
         self.groups = groups
@@ -22,6 +31,8 @@ class TournamentData:
 
 
 async def clone_tournament(tournament_id, api: toornament.AsyncViewerAPI):
+    """This Function Clones a Toornament.
+    `tournament_data` contains the Data, that will be converted into a TournamentData-Instance later.."""
     tournament_data = {
         'tournament': await api.get_tournament(tournament_id),
         'stages': {stage.id: stage for stage in await api.get_stages(tournament_id)},
@@ -32,6 +43,7 @@ async def clone_tournament(tournament_id, api: toornament.AsyncViewerAPI):
     }
 
     async def get_all(element, max_range, api_function):
+        """This function gets all Elements where a Range prevents to get all Elements."""
         i = 0
         while True:
             try:
@@ -154,34 +166,52 @@ class CloneRole(Clone):
     async def create(self, clone_type: CloneType):
         created_roles = await super().create(clone_type)
         if not self.dry and created_roles:
+            # This fetches the roles from Discord and sends a fully ordered list with role-positions back.
+            # The internal cache has huge problems to keep track of role positions.
+            # Remember the IDs of the Roles created
             created_roles_ids = [role.id for role in created_roles]
+            # Fetch Roles from Discord
             all_roles = await self.guild.fetch_roles()
+            # Sort roles by position
             all_roles.sort(key = lambda r: r.position)
+            # Separate new roles from old roles
             all_roles_except_new_roles = [role for role in all_roles if role.id not in created_roles_ids]
             only_new_roles = [role for role in all_roles if role.id in created_roles_ids]
+            # Reverse new roles, to let them appear in the correct order.
+            only_new_roles.reverse()
+            # `role_positions` is the argument, which will be given to guild.edit_role_positions
+            # Key: Role, Value: Position (int)
             role_positions = {}
+            # Counter keeps track of the position
             counter = 0
+
+            # Insert old roles into `role_positions`
             for role in all_roles_except_new_roles[:self.position]:
                 role_positions[role] = counter
                 counter += 1
+            # Remember where the old_roles were interrupted
             pointer_all_roles_except_new_roles = counter
+            # Insert new roles into `role_positions`
             for role in only_new_roles:
                 role_positions[role] = counter
                 counter += 1
+            # Insert old roles into `role_positions`
             for role in all_roles_except_new_roles[pointer_all_roles_except_new_roles:]:
                 role_positions[role] = counter
                 counter += 1
+            # Send new Role-Order to Discord.
             await self.guild.edit_role_positions(positions = role_positions, reason = self.reason)
 
         return created_roles
 
     async def create_single(self, placeholder):
         role_name = self.name_pattern.format(**placeholder)
-        print("Create Role: {name}".format(name = role_name))
+        # If `default_colour` is out of range, a random colour will be set
         if self.default_colour > 0xffffff:
             colour = discord.Colour(randint(0x000001, 0xffffff))
         else:
             colour = discord.Colour(self.default_colour)
+        # Preparing arguments for `guild.create_role`
         arguments = {
             'name': role_name,
             'colour': colour,
