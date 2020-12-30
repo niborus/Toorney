@@ -177,5 +177,6 @@ def print_arguments(*args, **kwargs):
         "Invoked with {0} args:\n"
         "{1}\n"
         "and {2} kwargs\n"
-        "{3}".format(len(args), '\n'.join(args), len(kwargs), '\n'.join([f'{k}: {v}' for k, v in kwargs.items()]))
+        "{3}\n"
+        "---\n\n".format(len(args), '\n'.join(args), len(kwargs), '\n'.join([f'{k}: {v}' for k, v in kwargs.items()]))
     )

@@ -12,6 +12,7 @@ import toornament
 
 class TournamentData:
     """Contains all Data about a Tournament."""
+
     def __init__(self, tournament: toornament.TournamentDetailed, stages: dict, groups: dict,
                  rounds: dict, matches: dict, participants: dict):
         """
@@ -151,6 +152,13 @@ class Clone:
             i += 1
         return created_objects
 
+    def create_arguments(self, placeholder) -> dict:
+        """Creates the arguments needed for the `create_OBJETC` Method."""
+        return {
+            'name': self.name_pattern.format(**placeholder),
+            'reason': self.reason
+        }
+
     async def create_single(self, placeholder):
         """Creates a Single Instance, like one Role or one Channel"""
 
@@ -204,21 +212,23 @@ class CloneRole(Clone):
 
         return created_roles
 
-    async def create_single(self, placeholder):
-        role_name = self.name_pattern.format(**placeholder)
+    def create_arguments(self, placeholder):
+        arguments = super().create_arguments(placeholder)
         # If `default_colour` is out of range, a random colour will be set
         if self.default_colour > 0xffffff:
             colour = discord.Colour(randint(0x000001, 0xffffff))
         else:
             colour = discord.Colour(self.default_colour)
         # Preparing arguments for `guild.create_role`
-        arguments = {
-            'name': role_name,
+        arguments.update({
             'colour': colour,
             'hoist': self.hoist,
             'mentionable': self.mentionable,
-            'reason': self.reason,
-        }
+        })
+        return arguments
+
+    async def create_single(self, placeholder):
+        arguments = self.create_arguments(placeholder)
         if not self.dry:
             await sleep(1.0)
             new_role = await self.guild.create_role(**arguments)
@@ -232,24 +242,74 @@ class CloneChannel(Clone):
         super().__init__(*args, **kwargs)
         self.default_overwrites = None
 
+    def create_arguments(self, placeholder) -> dict:
+        arguments = super().create_arguments(placeholder)
+        arguments.update({
+            'overwrites': self.default_overwrites,
+        })
+        return arguments
+
 
 class CloneDefaultChannel(CloneChannel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.category = None
-        self.topic = ""
+
+    def create_arguments(self, placeholder) -> dict:
+        arguments = super().create_arguments(placeholder)
+        if self.category:
+            arguments['category'] = self.category
+        return arguments
 
 
 class CloneVoiceChannel(CloneDefaultChannel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.bitrate = None
-        self.user_limit = None
+        self.bitrate = 64000  # This is a good default bitrate
+        self.user_limit = 0  # Zero means endless
+
+    def create_arguments(self, placeholder) -> dict:
+        arguments = super().create_arguments(placeholder)
+        arguments.update({
+            'bitrate': self.bitrate,
+            'user_limit': self.user_limit,
+        })
+        return arguments
+
+    async def create_single(self, placeholder):
+        arguments = self.create_arguments(placeholder)
+        if not self.dry:
+            await sleep(1.0)
+            new_channel = await self.guild.create_voice_channel(**arguments)
+            return new_channel
+        else:
+            print_arguments(**arguments)
 
 
 class CloneTextChannel(CloneDefaultChannel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.slowmode_delay = 0
+        self.nsfw = False
+        self.topic = ""
+
+    def create_arguments(self, placeholder) -> dict:
+        arguments = super().create_arguments(placeholder)
+        arguments.update({
+            'slowmode_delay': self.slowmode_delay,
+            'nsfw': self.nsfw,
+            'topic': self.topic.format(**placeholder),
+        })
+        return arguments
+
+    async def create_single(self, placeholder):
+        arguments = self.create_arguments(placeholder)
+        if not self.dry:
+            await sleep(1.0)
+            new_channel = await self.guild.create_text_channel(**arguments)
+            return new_channel
+        else:
+            print_arguments(**arguments)
 
 
 class CloneCategory(CloneChannel):
@@ -294,21 +354,21 @@ async def clone_toornament(ctx: commands.Context):
     # choice_to = int(await responses.multiple_choice([str(i) for i in range(1, 5)]))
     potential_clone_settings = {
         1: CloneVoiceChannel,
-        2: CloneDefaultChannel,
+        2: CloneTextChannel,
         3: CloneCategory,
         4: CloneRole,
     }
     # clone_settings = potential_clone_settings[choice_to]()
-    clone_settings = potential_clone_settings[4](ctx.guild)
+    clone_settings = potential_clone_settings[1](ctx.guild)
 
     # What Data to Fetch
     # await ctx.send(_("What do you want to clone?\n1-Stages\n2-Groups\n3-Rounds\n4-Matches\n5-Participants"))
     # choice_from = int(await responses.multiple_choice([str(i) for i in range(1, 6)]))
     clone_settings.name_pattern = '{i} - {name}'
-    clone_settings.dry = False
+    clone_settings.dry = True
     clone_settings.reason = "Cloning Tournament"
-    clone_settings.default_colour = 0xee5577
-    clone_settings.position = 5
+    clone_settings.topic = 'This is the Channel of {name}'
+    clone_settings.category = ctx.channel.category
     clone_type = CloneTypeSingleParticipants(tournament)
     await clone_settings.create(clone_type)
 
