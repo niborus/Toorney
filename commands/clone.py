@@ -9,6 +9,8 @@ from CustomErrors import CancelCommandSilent
 from customFunctions.diverse import create_embed_for_tournament, print_arguments
 import toornament
 
+simple_cache = {}
+
 
 class TournamentData:
     """Contains all Data about a Tournament."""
@@ -321,25 +323,31 @@ class CloneCategory(CloneChannel):
 @commands.command('clone', aliases = ['copy', 'cp'], usage = '(Interactive Menu)')
 @commands.has_guild_permissions(manage_channels = True, manage_permissions = True, manage_roles = True)
 @commands.bot_has_permissions(embed_links = True, add_reactions = True)
-async def clone_toornament(ctx: commands.Context):
+async def clone_toornament(ctx: commands.Context, toornament_id: int, from_choice: int, to_choice: int):
     """Create Channels on Discord that Shadow the Toornament."""
+    caching = True
     _ = ctx.bot.translate.get_t_by_ctx(ctx).gettext
 
     catalog = QuestionCatalog(ctx)
     responses = AwaitResponse(ctx)
-    toornament_id = await catalog.toornament()
+    # toornament_id = await catalog.toornament()
 
     await ctx.send("Please wait while we create a copy of the toornament...")
 
-    # Get Toornament and cancel Command, if Toornament not found.
-    try:
-        tournament = await clone_tournament(toornament_id, ctx.bot.viewer_api)
-    except ClientResponseError as err:
-        if err.status == 404:
-            await ctx.send(_("Toornament doesn't exit."))
-            raise CancelCommandSilent()
-        else:
-            raise err
+    if caching and toornament_id in simple_cache:
+        tournament = simple_cache[toornament_id]
+    else:
+        # Get Toornament and cancel Command, if Toornament not found.
+        try:
+            tournament = await clone_tournament(toornament_id, ctx.bot.viewer_api)
+        except ClientResponseError as err:
+            if err.status == 404:
+                await ctx.send(_("Toornament doesn't exit."))
+                raise CancelCommandSilent()
+            else:
+                raise err
+        if caching:
+            simple_cache[toornament_id] = tournament
 
     await ctx.send(embed = create_embed_for_tournament(tournament.tournament))
 
@@ -348,6 +356,14 @@ async def clone_toornament(ctx: commands.Context):
     # Create Voice/Text-Channel (what Category) (+Role)
     # Create Category-Channel (Content) (+Role)
     # Create only Roles
+    potential_clone_types = {
+        1: CloneTypeSingleParticipants,
+        2: CloneTypeTeamParticipants,
+        3: CloneTypeStages,
+        4: CloneTypeGroups,
+        5: CloneTypeRounds,
+        6: CloneTypeMatches
+    }
 
     # Make Clone-Settings
     # await ctx.send("1 - Voice, 2 - Text, 3 - Category, 4 - only Roles")
@@ -359,7 +375,7 @@ async def clone_toornament(ctx: commands.Context):
         4: CloneRole,
     }
     # clone_settings = potential_clone_settings[choice_to]()
-    clone_settings = potential_clone_settings[1](ctx.guild)
+    clone_settings = potential_clone_settings[to_choice](ctx.guild)
 
     # What Data to Fetch
     # await ctx.send(_("What do you want to clone?\n1-Stages\n2-Groups\n3-Rounds\n4-Matches\n5-Participants"))
@@ -369,7 +385,7 @@ async def clone_toornament(ctx: commands.Context):
     clone_settings.reason = "Cloning Tournament"
     clone_settings.topic = 'This is the Channel of {name}'
     clone_settings.category = ctx.channel.category
-    clone_type = CloneTypeSingleParticipants(tournament)
+    clone_type = potential_clone_types[from_choice](tournament)
     await clone_settings.create(clone_type)
 
 
