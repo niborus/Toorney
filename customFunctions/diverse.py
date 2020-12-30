@@ -170,3 +170,12 @@ def create_embed_for_tournament(tournament: toornament.TournamentDetailed):
         embed.set_thumbnail(url = tournament.logo.original)
 
     return embed
+
+
+def print_arguments(*args, **kwargs):
+    print(
+        "Invoked with {0} args:\n"
+        "{1}\n"
+        "and {2} kwargs\n"
+        "{3}".format(len(args), '\n'.join(args), len(kwargs), '\n'.join([f'{k}: {v}' for k, v in kwargs.items()]))
+    )
