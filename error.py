@@ -34,7 +34,7 @@ def setup(bot: ToorneyBot):
         class t:
             support_server = \
                 _("If you don't think, you made a mistake, please create a new issue ({link}).") \
-                    .format(link = "https://github.com/niborus/Toorney/issues")
+                    .format(link = "https://github.com/niborus/Toorney/discussions/categories/q-a")
 
         # List with possible errors and the handling level of those errors
 
@@ -73,7 +73,7 @@ def setup(bot: ToorneyBot):
 
             await ctx.send(_(
                 "Something went terrible wrong while doing this.\nPlease reach out for the "
-                "Bot-Support (https://github.com/niborus/Toorney/issues)."))
+                "Bot-Support ({link}).").format(link='https://github.com/niborus/Toorney/discussions/categories/q-a'))
 
         # User Replies
         # Command silently Canceled:
