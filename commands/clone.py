@@ -79,25 +79,25 @@ async def clone_tournament(tournament_id, api: toornament.AsyncViewerAPI):
 
 
 class CloneType:
-    def __init__(self, tournament_data: TournamentData):
-        self.tournament_data = tournament_data
-
-    def get_placeholder_from_element(self, element):
+    @classmethod
+    def get_placeholders(cls, element, tournament_data: TournamentData):
         """Takes a Element (like Player, Toornament, ) and the Data of the Tournament and creates a dict
         for placeholders."""
         return {
             'id': element.id
         }
 
-    def get_elements(self):
-        """:returns All Elements"""
+    @classmethod
+    def get_elements(cls, tournament_data: TournamentData):
+        """:returns All Elements, that belong to the type of the CloneType unfiltered"""
         return []
 
 
 class CloneTypeStages(CloneType):
 
-    def get_placeholder_from_element(self, stage: toornament.Stage):
-        placeholders = super().get_placeholder_from_element(stage)
+    @classmethod
+    def get_placeholders(cls, stage: toornament.Stage, tournament_data: TournamentData):
+        placeholders = super().get_placeholders(stage, tournament_data)
         placeholders.update({
             'number': stage.number,
             'name': stage.name,
@@ -107,58 +107,126 @@ class CloneTypeStages(CloneType):
 
         return placeholders
 
-    def get_elements(self):
-        return self.tournament_data.stages
+    @classmethod
+    def get_elements(cls, tournament_data: TournamentData):
+        return tournament_data.stages.values()
 
 
 class CloneTypeGroups(CloneType):
 
-    def get_placeholder_from_element(self, group: toornament.Group):
-        placeholders = super().get_placeholder_from_element(group)
+    @classmethod
+    def get_placeholders(cls, group: toornament.Group, tournament_data: TournamentData):
+        placeholders = super().get_placeholders(group, tournament_data)
         placeholders.update({
             'number': group.number,
             'name': group.name,
             'settings': group.settings,
-            'stage': CloneTypeStages(self.tournament_data).get_placeholder_from_element(self.tournament_data.stages[group.stage_id])
+            'stage': CloneTypeStages.get_placeholders(tournament_data.stages[group.stage_id], tournament_data)
         })
 
         return placeholders
 
-    def get_elements(self):
-        return self.tournament_data.groups
+    @classmethod
+    def get_elements(cls, tournament_data: TournamentData):
+        return tournament_data.groups.values()
 
 
 class CloneTypeRounds(CloneType):
-    pass
+    @classmethod
+    def get_placeholders(cls, round: toornament.Round, tournament_data: TournamentData):
+        placeholders = super().get_placeholders(round, tournament_data)
+        placeholders.update({
+            'stage': CloneTypeStages.get_placeholders(tournament_data.stages[round.stage_id], tournament_data),
+            'group': CloneTypeGroups.get_placeholders(tournament_data.groups[round.group_id], tournament_data),
+            'number': round.number,
+            'name': round.name,
+            'settings': round.settings,
+        })
+
+        return placeholders
+
+    @classmethod
+    def get_elements(cls, tournament_data: TournamentData):
+        return tournament_data.rounds.values()
 
 
 class CloneTypeMatches(CloneType):
-    pass
+    @classmethod
+    def get_placeholders(cls, match: toornament.Match, tournament_data: TournamentData):
+        placeholders = super().get_placeholders(match, tournament_data)
+        round_placeholders = CloneTypeRounds.get_placeholders(tournament_data.groups[match.round_id], tournament_data)
+        opponent_names = []
+        for opponent in match.opponents:
+            if opponent.participant:
+                opponent_names.append(opponent.participant.name)
+            else:
+                opponent_names.append('TBD')
+        placeholders.update({
+            'stage': CloneTypeStages.get_placeholders(tournament_data.stages[match.stage_id], tournament_data),
+            'group': CloneTypeGroups.get_placeholders(tournament_data.groups[match.group_id], tournament_data),
+            'round': round_placeholders,
+            'number': match.number,
+            'type': match.type,
+            'scheduled_datetime': match.scheduled_datetime,
+            'name': 'M {0}.{1}'.format(round_placeholders['number'], match.number),
+            'opponents_names_comma': ', '.join(opponent_names),
+            'opponents_names_space': ' '.join(opponent_names),
+            'opponents_names_linebreak': '\n'.join(opponent_names),
+            'opponents_names_vs': ' vs. '.join(opponent_names),
+        })
 
-
-class CloneTypeTeamParticipants(CloneType):
-    pass
+    @classmethod
+    def get_elements(cls, tournament_data: TournamentData):
+        return tournament_data.matches.values()
 
 
 class CloneTypeParticipants(CloneType):
 
-    def get_placeholder_from_element(self, participant: toornament.ParticipantPlayer):
-        placeholder = super().get_placeholder_from_element(participant)
+    @classmethod
+    def get_placeholders(cls, participant: toornament.ParticipantPlayer, tournament_data: TournamentData):
+        placeholder = super().get_placeholders(participant, tournament_data)
         placeholder.update({
-            'name': participant.name
+            'name': participant.name,
+            'custom_fields': participant.custom_fields,
         })
         return placeholder
 
-    def get_elements(self):
-        return self.tournament_data.participants.values()
+    @classmethod
+    def get_elements(cls, tournament_data: TournamentData):
+        return tournament_data.participants.values()
 
 
-class CloneTypeIndividualParticipants(CloneTypeParticipants):
-    pass
+class CloneTypeParticipantTeam(CloneTypeParticipants):
+    @classmethod
+    def get_placeholders(cls, participant: toornament.ParticipantTeam, tournament_data: TournamentData):
+        placeholder = super().get_placeholders(participant, tournament_data)
+        lineup_names = [players.name for players in participant.lineup]
+        placeholder.update({
+            'lineup_names_comma': ', '.join(lineup_names),
+            'lineup_names_space': ' '.join(lineup_names),
+            'lineup_names_linebreak': '\n'.join(lineup_names),
+        })
+        return placeholder
 
 
-class CloneTypeSingleParticipants(CloneTypeParticipants):
-    pass
+class CloneTypeCache:
+    def __init__(self, clone_type, tournament_data: TournamentData, filter=None, sort_key=None, sort_reverse=False):
+        self.clone_type = clone_type
+        self.tournament_data = tournament_data
+        self.filter = filter if filter else lambda element: True
+        self.sort = {
+            'key': sort_key if sort_key else lambda element: element.id,
+            'reverse': sort_reverse
+        }
+
+    def get_prepared_list(self):
+        unprepared_list = self.clone_type.get_elements(self.tournament_data)
+        prepared_list = [element for element in unprepared_list if self.filter(element)]
+        prepared_list.sort(**self.sort)
+        return prepared_list
+    
+    def get_placeholders_for_element(self, element):
+        return self.clone_type.get_placeholders(element, self.tournament_data)
 
 
 class Clone:
@@ -169,14 +237,14 @@ class Clone:
         self.create_type = None
         self.name_pattern = "{i}"
 
-    async def create(self, clone_type: CloneType):
+    async def create(self, clone_type: CloneTypeCache):
         """Clones the Toornament to the server. Setting must be given before"""
-        elements = clone_type.get_elements()
+        elements = clone_type.get_prepared_list()
         i = 1
         created_objects = {}
         for element in elements:
             placeholder = {'i': i}
-            placeholder.update(clone_type.get_placeholder_from_element(element))
+            placeholder.update(clone_type.get_placeholders_for_element(element))
             created_objects[element] = await self.create_single(placeholder, element)
             i += 1
         return created_objects
@@ -210,7 +278,7 @@ class CloneRole(Clone):
         self.hoist = False
         self.position = 1
 
-    async def create(self, clone_type: CloneType):
+    async def create(self, clone_type: CloneTypeCache):
         created_roles = await super().create(clone_type)
         if not self.dry and created_roles:
             # This fetches the roles from Discord and sends a fully ordered list with role-positions back.
@@ -281,13 +349,14 @@ class CloneChannel(Clone):
         arguments = super().create_arguments(placeholder, element)
         overwrites = self.default_overwrites.copy()
         if element in self.roles_created:
-            overwrites[self.roles_created[element]] = discord.PermissionOverwrite(read_messages=True, send_messages=True)
+            overwrites[self.roles_created[element]] = discord.PermissionOverwrite(read_messages = True,
+                                                                                  send_messages = True)
         arguments.update({
             'overwrites': overwrites,
         })
         return arguments
-    
-    async def create(self, clone_type: CloneType):
+
+    async def create(self, clone_type: CloneTypeCache):
         if self.roles:
             self.roles_created = await self.roles.create(clone_type)
         await super().create(clone_type)
@@ -389,8 +458,8 @@ async def clone_toornament(ctx: commands.Context, toornament_id: int, from_choic
     # Create Category-Channel (Content) (+Role)
     # Create only Roles
     potential_clone_types = {
-        1: CloneTypeSingleParticipants,
-        2: CloneTypeTeamParticipants,
+        1: CloneTypeParticipants,
+        2: CloneTypeParticipantTeam,
         3: CloneTypeStages,
         4: CloneTypeGroups,
         5: CloneTypeRounds,
@@ -414,6 +483,8 @@ async def clone_toornament(ctx: commands.Context, toornament_id: int, from_choic
         clone_settings.roles.name_pattern = '{i} - {name}'
         clone_settings.roles.reason = "Cloning Tournament"
         clone_settings.roles.dry = False
+        clone_settings.roles.default_colour = 0x1000000
+        clone_settings.roles.position = 7
 
     # What Data to Fetch
     # await ctx.send(_("What do you want to clone?\n1-Stages\n2-Groups\n3-Rounds\n4-Matches\n5-Participants"))
@@ -423,8 +494,16 @@ async def clone_toornament(ctx: commands.Context, toornament_id: int, from_choic
     clone_settings.reason = "Cloning Tournament"
     clone_settings.topic = 'This is the Channel of {name}'
     clone_settings.category = ctx.channel.category
-    clone_type = potential_clone_types[from_choice](tournament)
-    await clone_settings.create(clone_type)
+    clone_type_cache = CloneTypeCache(
+        clone_type = potential_clone_types[from_choice],
+        tournament_data = tournament,
+        filter = lambda element: element.number in ('Weemo', 'nibori'),
+        sort_key = lambda element: element.name.lower(),
+        sort_reverse = True
+    )
+    await clone_settings.create(clone_type_cache)
+
+    # @ToDo: Test new CloneTypes
 
 
 def setup(bot: ToorneyBot):
