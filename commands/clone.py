@@ -4,6 +4,7 @@ from aiohttp import ClientResponseError
 from discord.ext import commands
 from random import randint
 from ToorneyBot import ToorneyBot
+from typing import Optional
 from interactive_menu import QuestionCatalog, AwaitResponse
 from CustomErrors import CancelCommandSilent
 from customFunctions.diverse import create_embed_for_tournament, print_arguments
@@ -94,11 +95,37 @@ class CloneType:
 
 
 class CloneTypeStages(CloneType):
-    pass
+
+    def get_placeholder_from_element(self, stage: toornament.Stage):
+        placeholders = super().get_placeholder_from_element(stage)
+        placeholders.update({
+            'number': stage.number,
+            'name': stage.name,
+            'type': stage.type,
+            'settings': stage.settings,
+        })
+
+        return placeholders
+
+    def get_elements(self):
+        return self.tournament_data.stages
 
 
 class CloneTypeGroups(CloneType):
-    pass
+
+    def get_placeholder_from_element(self, group: toornament.Group):
+        placeholders = super().get_placeholder_from_element(group)
+        placeholders.update({
+            'number': group.number,
+            'name': group.name,
+            'settings': group.settings,
+            'stage': CloneTypeStages(self.tournament_data).get_placeholder_from_element(self.tournament_data.stages[group.stage_id])
+        })
+
+        return placeholders
+
+    def get_elements(self):
+        return self.tournament_data.groups
 
 
 class CloneTypeRounds(CloneType):
@@ -146,23 +173,33 @@ class Clone:
         """Clones the Toornament to the server. Setting must be given before"""
         elements = clone_type.get_elements()
         i = 1
-        created_objects = []
+        created_objects = {}
         for element in elements:
             placeholder = {'i': i}
             placeholder.update(clone_type.get_placeholder_from_element(element))
-            created_objects.append(await self.create_single(placeholder))
+            created_objects[element] = await self.create_single(placeholder, element)
             i += 1
         return created_objects
 
-    def create_arguments(self, placeholder) -> dict:
+    def create_arguments(self, placeholder, element) -> dict:
         """Creates the arguments needed for the `create_OBJETC` Method."""
         return {
             'name': self.name_pattern.format(**placeholder),
             'reason': self.reason
         }
 
-    async def create_single(self, placeholder):
+    async def guild_create_object(self, *args, **kwargs):
+        """Calls the according Discord-Function"""
+
+    async def create_single(self, placeholder, element):
         """Creates a Single Instance, like one Role or one Channel"""
+        arguments = self.create_arguments(placeholder, element)
+        if not self.dry:
+            await sleep(1.0)
+            new_object = await self.guild_create_object(**arguments)
+            return new_object
+        else:
+            print_arguments(**arguments)
 
 
 class CloneRole(Clone):
@@ -179,7 +216,7 @@ class CloneRole(Clone):
             # This fetches the roles from Discord and sends a fully ordered list with role-positions back.
             # The internal cache has huge problems to keep track of role positions.
             # Remember the IDs of the Roles created
-            created_roles_ids = [role.id for role in created_roles]
+            created_roles_ids = [role.id for role in created_roles.values()]
             # Fetch Roles from Discord
             all_roles = await self.guild.fetch_roles()
             # Sort roles by position
@@ -214,8 +251,8 @@ class CloneRole(Clone):
 
         return created_roles
 
-    def create_arguments(self, placeholder):
-        arguments = super().create_arguments(placeholder)
+    def create_arguments(self, placeholder, element):
+        arguments = super().create_arguments(placeholder, element)
         # If `default_colour` is out of range, a random colour will be set
         if self.default_colour > 0xffffff:
             colour = discord.Colour(randint(0x000001, 0xffffff))
@@ -229,27 +266,31 @@ class CloneRole(Clone):
         })
         return arguments
 
-    async def create_single(self, placeholder):
-        arguments = self.create_arguments(placeholder)
-        if not self.dry:
-            await sleep(1.0)
-            new_role = await self.guild.create_role(**arguments)
-            return new_role
-        else:
-            print_arguments(**arguments)
+    async def guild_create_object(self, *args, **kwargs):
+        return await self.guild.create_role(*args, **kwargs)
 
 
 class CloneChannel(Clone):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.default_overwrites = None
+        self.default_overwrites = {}
+        self.roles: Optional[CloneRole] = None
+        self.roles_created = {}  # This setting will be set AFTER calling `.create`
 
-    def create_arguments(self, placeholder) -> dict:
-        arguments = super().create_arguments(placeholder)
+    def create_arguments(self, placeholder, element) -> dict:
+        arguments = super().create_arguments(placeholder, element)
+        overwrites = self.default_overwrites.copy()
+        if element in self.roles_created:
+            overwrites[self.roles_created[element]] = discord.PermissionOverwrite(read_messages=True, send_messages=True)
         arguments.update({
-            'overwrites': self.default_overwrites,
+            'overwrites': overwrites,
         })
         return arguments
+    
+    async def create(self, clone_type: CloneType):
+        if self.roles:
+            self.roles_created = await self.roles.create(clone_type)
+        await super().create(clone_type)
 
 
 class CloneDefaultChannel(CloneChannel):
@@ -257,8 +298,8 @@ class CloneDefaultChannel(CloneChannel):
         super().__init__(*args, **kwargs)
         self.category = None
 
-    def create_arguments(self, placeholder) -> dict:
-        arguments = super().create_arguments(placeholder)
+    def create_arguments(self, placeholder, element) -> dict:
+        arguments = super().create_arguments(placeholder, element)
         if self.category:
             arguments['category'] = self.category
         return arguments
@@ -270,22 +311,16 @@ class CloneVoiceChannel(CloneDefaultChannel):
         self.bitrate = 64000  # This is a good default bitrate
         self.user_limit = 0  # Zero means endless
 
-    def create_arguments(self, placeholder) -> dict:
-        arguments = super().create_arguments(placeholder)
+    def create_arguments(self, placeholder, element) -> dict:
+        arguments = super().create_arguments(placeholder, element)
         arguments.update({
             'bitrate': self.bitrate,
             'user_limit': self.user_limit,
         })
         return arguments
 
-    async def create_single(self, placeholder):
-        arguments = self.create_arguments(placeholder)
-        if not self.dry:
-            await sleep(1.0)
-            new_channel = await self.guild.create_voice_channel(**arguments)
-            return new_channel
-        else:
-            print_arguments(**arguments)
+    async def guild_create_object(self, *args, **kwargs):
+        return await self.guild.create_voice_channel(*args, **kwargs)
 
 
 class CloneTextChannel(CloneDefaultChannel):
@@ -295,8 +330,8 @@ class CloneTextChannel(CloneDefaultChannel):
         self.nsfw = False
         self.topic = ""
 
-    def create_arguments(self, placeholder) -> dict:
-        arguments = super().create_arguments(placeholder)
+    def create_arguments(self, placeholder, element) -> dict:
+        arguments = super().create_arguments(placeholder, element)
         arguments.update({
             'slowmode_delay': self.slowmode_delay,
             'nsfw': self.nsfw,
@@ -304,20 +339,17 @@ class CloneTextChannel(CloneDefaultChannel):
         })
         return arguments
 
-    async def create_single(self, placeholder):
-        arguments = self.create_arguments(placeholder)
-        if not self.dry:
-            await sleep(1.0)
-            new_channel = await self.guild.create_text_channel(**arguments)
-            return new_channel
-        else:
-            print_arguments(**arguments)
+    async def guild_create_object(self, *args, **kwargs):
+        return await self.guild.create_text_channel(*args, **kwargs)
 
 
 class CloneCategory(CloneChannel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.insert = []  # List With CloneDefaultChannel
+
+    async def guild_create_object(self, *args, **kwargs):
+        return await self.guild.create_category(*args, **kwargs)
 
 
 @commands.command('clone', aliases = ['copy', 'cp'], usage = '(Interactive Menu)')
@@ -377,11 +409,17 @@ async def clone_toornament(ctx: commands.Context, toornament_id: int, from_choic
     # clone_settings = potential_clone_settings[choice_to]()
     clone_settings = potential_clone_settings[to_choice](ctx.guild)
 
+    if isinstance(clone_settings, CloneChannel):
+        clone_settings.roles = CloneRole(ctx.guild)
+        clone_settings.roles.name_pattern = '{i} - {name}'
+        clone_settings.roles.reason = "Cloning Tournament"
+        clone_settings.roles.dry = False
+
     # What Data to Fetch
     # await ctx.send(_("What do you want to clone?\n1-Stages\n2-Groups\n3-Rounds\n4-Matches\n5-Participants"))
     # choice_from = int(await responses.multiple_choice([str(i) for i in range(1, 6)]))
     clone_settings.name_pattern = '{i} - {name}'
-    clone_settings.dry = True
+    clone_settings.dry = False
     clone_settings.reason = "Cloning Tournament"
     clone_settings.topic = 'This is the Channel of {name}'
     clone_settings.category = ctx.channel.category
