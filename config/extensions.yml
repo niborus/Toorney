@@ -8,6 +8,7 @@
 Whitelist:
   Folders:
     - commands
+    - api
 
   Files:
     - error
