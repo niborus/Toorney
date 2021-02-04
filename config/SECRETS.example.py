@@ -12,6 +12,7 @@ class ToornamentLogin:
     api_key = "X API Key"
     client_id = "Client ID"
     client_secret = "Client Secret"
+    callback_url = 'http://localhost:8083/toorney/callback'
 
 
 class SQL_Login(object):
@@ -20,3 +21,7 @@ class SQL_Login(object):
     host = "localhost"
     passwd = "string"
     port = 5432
+
+
+class WebAPI:
+    base_url = 'http://localhost:8083/toorney'

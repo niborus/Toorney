@@ -3,8 +3,8 @@ from discord import Client
 
 
 class Web:
-    def __init__(self, client: Client):
-        self.port = 8080
+    def __init__(self, client: Client, port):
+        self.port = port
         self.task = client.loop.create_task(self._api())
         self._is_closed = False
         self.app = web.Application(loop = client.loop)

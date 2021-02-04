@@ -33,13 +33,13 @@ logger_l.addHandler(handler)
 
 intents = discord.Intents.default()
 intents.members = True  # Subscribe to the privileged members intent.
-intents.presences = True
+intents.presences = True  # Subscribe to the privileged members intent.
 intents.typing = False
 intents.bans = False
 intents.invites = False
 
 bot = ToorneyBot(command_prefix = commands.when_mentioned_or(STATICS.PREFIX), description = STATICS.DESCRIPTION,
-                 status = discord.Status.dnd, owner_id = STATICS.OWNER_ID,
+                 status = discord.Status.dnd, owner_id = STATICS.OWNER_ID, port = SECRETS.WebAPI.port,
                  activity = discord.Game(name = "Booting"), intents = intents,
                  allowed_mentions = discord.AllowedMentions(everyone = False, users = False, roles = False))
 
