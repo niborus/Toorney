@@ -1,0 +1,27 @@
+@startuml
+actor "User" as user
+participant "ToorneyBot" as bot
+database "ToorneyBot\nDatabase" as db
+participant "Toornament" as toornament
+participant "Discord" as discord
+
+user -> bot: Scopes
+bot --> user: Link: Discord\n  State(scopes)
+
+== Authentication Discord ==
+
+user -> bot: Discord Callback
+bot -> discord: Request DiscordID
+discord --> bot: DiscordID
+bot -> bot: Generate\nJWT Token\nwith DiscordID
+bot --> user: Link: Toornament\n  State: JWT-DiscordID
+
+== Authentication Toornament ==
+
+user -> bot: Toornament Callback\n  State: JWT-DiscordID
+bot -> bot: Verify JWT-Token
+bot -> toornament: Request Bearer Token
+toornament --> bot: Bearer Token
+bot -> db: DiscordID,\nToken\nToornamentID
+bot --> user: 200
+@enduml
