@@ -3,11 +3,15 @@ import asyncio
 import discord
 import logging
 import typing
+import toornament
 from discord.ext import commands
+from gettext import GNUTranslations
 # Logging
 from discord.ext.commands import MissingPermissions
 
 logger = logging.getLogger('own_functions')
+
+EMBED_FIELD_VALUE_LIMIT = 1024
 
 
 class Errors:
@@ -99,3 +103,61 @@ def sanitize(s: str) -> str:
 
 def get_permission_slang(s: str):
     return s.replace('_', ' ').replace('guild', 'server').title()
+
+
+def create_embed_from_tournament(tournament: toornament.Tournament, *, embed: typing.Optional[discord.Embed] = None,
+                                 translation: typing.Optional[GNUTranslations] = None) -> discord.Embed:
+    """Creates a Standard-Embed for a Tournament."""
+    _ = translation.gettext if translation else lambda s: s
+
+    if embed is None:
+        embed = discord.Embed()
+
+    embed.title = tournament.full_name or tournament.name
+    embed.url = f"https://www.toornament.com/en_GB/tournaments/{tournament.id}"
+    if tournament.logo:
+        embed.set_thumbnail(url=tournament.logo.logo_medium)
+
+    if tournament.online is None:
+        online = None
+    elif tournament.online:  # == True:
+        online = _("Online")
+    else:  # tournament.online: == False:
+        online = _("Offline")
+
+    if online:
+        embed.add_field(name = _("Game"), value = f"{tournament.discipline}, {online}", inline = False)
+    else:
+        embed.add_field(name = _("Game"), value = f"{tournament.discipline}", inline = False)
+
+    embed.add_field(name = _("Size"), value = str(tournament.size))
+
+    possible_status = {
+        "pending": _("Pending"),
+        "running": _("Running"),
+        "completed": _("Completed"),
+    }
+    embed.add_field(name = _('Status'), value = possible_status.get(tournament.status, _("Status unknown")))
+
+    embed.set_footer(text = str(tournament.id))
+
+    if isinstance(tournament, toornament.TournamentDetailed):
+        if tournament.organization:
+            embed.set_author(name = tournament.organization)
+
+        embed.description = tournament.description
+
+        if tournament.prize:
+            embed.add_field(name = _("Price"), value = tournament.prize[:EMBED_FIELD_VALUE_LIMIT])
+
+        contacts = []
+        if tournament.discord:
+            contacts.append(_("Discord: [{0}]({1})").format(tournament.discord.rsplit('/', 1)[1], tournament.discord))
+        if tournament.contact:
+            contacts.append(_("E-Mail Address: {0}").format(tournament.contact))
+        if tournament.website:
+            contacts.append(_("Website: [{0}]({1})").format(tournament.website))
+        if contacts:
+            embed.add_field(name = _("Contact"), value = "\n".join(contacts), inline = False)
+
+    return embed
